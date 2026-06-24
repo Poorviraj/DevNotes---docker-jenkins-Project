@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
         DOCKERHUB_USERNAME = 'poorviraj'
-        APP_SERVER = 'ubuntu@34.228.6.134'
+        APP_SERVER = 'ubuntu@54.173.29.85'
         IMAGE_TAG = "${BUILD_NUMBER}"
     }
 
@@ -34,7 +34,7 @@ pipeline {
                 echo 'Building frontend Docker image...'
                 sh """
                     docker build \
-                        --build-arg VITE_API_URL=http://34.228.6.134:5000/api \
+                        --build-arg VITE_API_URL=http://54.173.29.85:5000/api \
                         -t ${DOCKERHUB_USERNAME}/devnotes-frontend:${IMAGE_TAG} \
                         -t ${DOCKERHUB_USERNAME}/devnotes-frontend:latest \
                         ./frontend
@@ -84,7 +84,7 @@ pipeline {
                 echo 'Running health check...'
                 sh """
                     sleep 15
-                    STATUS=\$(curl -s -o /dev/null -w "%{http_code}" http://34.228.6.134:5000/api/health)
+                    STATUS=\$(curl -s -o /dev/null -w "%{http_code}" http://54.173.29.85:5000/api/health)
                     if [ \$STATUS -eq 200 ]; then
                         echo "Health check passed!"
                     else
